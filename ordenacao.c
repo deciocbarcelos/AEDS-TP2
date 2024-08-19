@@ -16,7 +16,7 @@ void print_vetor(Item* v, int n) {
     }
 }
 
-void selectionSort(Item* v, int n) {
+void selectionsort(Item* v, int n) {
     int i, j, Min;
     Item aux;
 
@@ -38,7 +38,7 @@ void selectionSort(Item* v, int n) {
     }
 }
 
-void insertionSort(Item* v, int n) {
+void Inserctionsort(Item* v, int n) {
     int i, j;
     Item aux;
 
@@ -58,7 +58,7 @@ void insertionSort(Item* v, int n) {
     }
 }
 
-void bubbleSort(Item* v, int n) {
+void BubbleSort(Item* v, int n) {
     int i, j;
     Item aux;
 
@@ -78,7 +78,7 @@ void bubbleSort(Item* v, int n) {
     }
 }
 
-void particao(int Esq, int Dir, int* i, int* j, Item* A) {
+void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
     Item pivo, aux;
     *i = Esq;
     *j = Dir;
@@ -102,7 +102,7 @@ void particao(int Esq, int Dir, int* i, int* j, Item* A) {
     }
 }
 
-void ordena(int Esq, int Dir, Item* A) {
+void Ordena(int Esq, int Dir, Item* A) {
     int i, j;
     particao(Esq, Dir, &i, &j, A);
     if (Esq < j) ordena(Esq, j, A);
@@ -113,7 +113,7 @@ void quickSortrecursivo(Item* A, int n) {
     ordena(0, n - 1, A);
 }
 
-void quickSortIterativo(Item* A, int n) {
+void QuickSort_iterativo(Item* A, int n) {
     // Cria uma pilha para armazenar os índices das sublistas
     int* stack = (int*)malloc(n * sizeof(int));
 
@@ -276,9 +276,9 @@ void executar_experimento(Item* v, int n, void (*sort_func)(Item*, int)) {
 
     double tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
 
-    printf("Tempo de Execução: %.3f segundos\n", tempo_execucao);
-    printf("Comparações: %lld\n", comparacoes);
-    printf("Cópias: %lld\n", copias);
+    printf("Tempo de Execucao: %.3f segundos\n", tempo_execucao);
+    printf("Comparacoes: %lld\n", comparacoes);
+    printf("Copias: %lld\n", copias);
 }
 void gerar_vetor_aleatorio(Item* v, int n) {
     for (int i = 0; i < n; i++) {

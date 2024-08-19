@@ -5,7 +5,10 @@
 
 int main(){
 
-        int v[] = {9,8,1,7,3,5,2,4,6} ;
+        Item v[] = {9,8,1,7,3,5,2,4,6} ;
+
+
+        executar_experimento(v,9, BubbleSort);
 
 
 

@@ -14,7 +14,7 @@ typedef int Elemento ;
 
 
 void selectionsort(Item *v, int n);
-void Bubblesort(Item* v, int n );
+void BubbleSort(Item* v, int n );
 void Inserctionsort(Item* v, int n );
 void quickSortrecursivo(Item* A, int n);
 void Ordena(int Esq, int Dir, Item *A);

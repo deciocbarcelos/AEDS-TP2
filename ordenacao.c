@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#define verbose 1
 
-// Variável de controle para o modo verbose
-int verbose = 0; // 1 para ativar, 0 para desativar
+
 
 void print_vetor(Item* v, int n) {
     if (verbose) {

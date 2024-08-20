@@ -104,13 +104,13 @@ void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
 
 void Ordena(int Esq, int Dir, Item* A) {
     int i, j;
-    particao(Esq, Dir, &i, &j, A);
-    if (Esq < j) ordena(Esq, j, A);
-    if (i < Dir) ordena(i, Dir, A);
+    Particao(Esq, Dir, &i, &j, A);
+    if (Esq < j) Ordena(Esq, j, A);
+    if (i < Dir) Ordena(i, Dir, A);
 }
 
 void quickSortrecursivo(Item* A, int n) {
-    ordena(0, n - 1, A);
+    Ordena(0, n - 1, A);
 }
 
 void QuickSort_iterativo(Item* A, int n) {
@@ -130,7 +130,7 @@ void QuickSort_iterativo(Item* A, int n) {
 
         // Realiza a partição
         int i, j;
-        particao(Esq, Dir, &i, &j, A);
+        Particao(Esq, Dir, &i, &j, A);
 
         // Se existirem elementos à esquerda do pivô, empilha os índices correspondentes
         if (Esq < j) {
@@ -201,7 +201,7 @@ void quickSortMediana3(Item* A, int n) {
     ordenaMediana3(0, n - 1, A);
 }
 void quickSortComInsercao(Item* A, int n) {
-    ordena(0, n - 1, A);
+    Ordena(0, n - 1, A);
 }
 
 // Função para encontrar a mediana de 5 elementos

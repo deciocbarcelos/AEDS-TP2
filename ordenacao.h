@@ -12,7 +12,7 @@ int chave ;
 typedef int Elemento ;
 
 
-
+int menu(); 
 void selectionsort(Item *v, int n); //Funcionando correto
 void BubbleSort(Item* v, int n );  //Funcionando correto
 void Inserctionsort(Item* v, int n );//Funcionando correto
@@ -31,6 +31,4 @@ void gerar_vetor_aleatorio(Item* v, int n);
 void quickSortMediana3(Item* A, int n); // Não esta funcionando corretamente
 void ordenaMediana3(int Esq, int Dir, Item* A);
 void particaoMediana3(int Esq, int Dir, int* i, int* j, Item* A) ;
-
-
 #endif

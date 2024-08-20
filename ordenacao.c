@@ -5,7 +5,21 @@
 #include <time.h>
 #define verbose 1
 
-
+int menu() {
+    int opcao;
+    printf("1. Ordenação Selection Sort\n");
+    printf("2. Ordenação Insertion Sort\n");
+    printf("3. Ordenação Bubble Sort\n");
+    printf("4. Ordenação Quick Sort\n");
+    printf("5. Ordenação Quick Sort com Inserção\n");
+    printf("6. Ordenação Quick Sort recursivo\n");
+    printf("7. Ordenação Quick Sort com Partição e Mediana de 3\n");
+    printf("8. Ordenação Quick Sort com Partição e Mediana de 5\n");
+    printf("9. Ordenação Quick Sort iterativo\n");
+    printf("escolha uma opção: ");
+    scanf("%d", &opcao);
+    return opcao;
+}
 
 void print_vetor(Item* v, int n) {
     if (verbose) {
@@ -187,6 +201,10 @@ void particaoMediana3(int Esq, int Dir, int* i, int* j, Item* A) {
             (*j)--;
         }
     } while (*i <= *j);
+    if (verbose) {
+        printf("ParticaoMediana3: Esq=%d, Dir=%d, i=%d, j=%d, Pivô=%d\n", Esq, Dir, *i, *j, pivo.chave);
+        print_vetor(A, Dir - Esq + 1);
+    }
 }
 
 void ordenaMediana3(int Esq, int Dir, Item* A) {
@@ -262,10 +280,11 @@ void ordenaMediana5(int Esq, int Dir, Item* A) {
     if (i < Dir) ordenaMediana5(i, Dir, A);
 }
 
-void quickSortMediana5(Item* A, int n) {
+void quickSortMediana5(Item* A, int n) {    
     srand(time(NULL));  // Inicializa a semente do gerador de números aleatórios
     ordenaMediana5(0, n - 1, A);
 }
+
 void executar_experimento(Item* v, int n, void (*sort_func)(Item*, int)) {
     long long int comparacoes = 0;
     long long int copias = 0;

@@ -10,7 +10,7 @@ int main(){
     int n = sizeof(v) / sizeof(v[0]);
 
     int opcao = menu();
-    Inserctionsort(v, n);
+    quickSortrecursivo(v, n);
     printf("vetor final\n");
     print_vetor(v, n);
 

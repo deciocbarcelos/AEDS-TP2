@@ -43,12 +43,16 @@ void selectionsort(Item* v, int n) {
             comparacoes++;
             if (v[j].chave < v[Min].chave) {
                 Min = j;
-                trocas++;
             }
         }
-        aux = v[Min];
-        v[Min] = v[i];
-        v[i] = aux;
+
+        // Só incrementa a contagem de trocas se Min for diferente de i, ou seja, uma troca real ocorreu
+        if (Min != i) {
+            aux = v[Min];
+            v[Min] = v[i];
+            v[i] = aux;
+            trocas++;
+        }
 
         if (verbose) {
             printf("SelectionSort: passo %d\n", i + 1);
@@ -74,7 +78,7 @@ void Inserctionsort(Item* v, int n) {
             j--;
             trocas++;
         }
-
+    
         v[j + 1] = aux;
         if (verbose) {
             printf("InsertionSort: passo %d\n", i);
@@ -128,15 +132,20 @@ void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
             A[*j] = aux;
             (*i)++;
             (*j)--;
+            trocas ++;
+
         }
+        comparacoes++;
     } while (*i <= *j);
-    comparacoes++;
+    
     if (verbose) {
         printf("Particao: Esq=%d, Dir=%d, i=%d, j=%d, Pivô=%d\n", Esq, Dir, *i, *j, pivo.chave);
         printf("trocou %d com %d\n", A[*i].chave, A[*j].chave);
         print_vetor(A, Dir - Esq + 1);
+        
     }
     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
 }
 
 void Ordena(int Esq, int Dir, Item* A) {
@@ -173,12 +182,14 @@ void QuickSort_iterativo(Item* A, int n) {
         if (Esq < j) {
             stack[++topo] = Esq;
             stack[++topo] = j;
+            trocas++;
         }
 
         // Se existirem elementos à direita do pivô, empilha os índices correspondentes
         if (i < Dir) {
             stack[++topo] = i;
             stack[++topo] = Dir;
+            trocas++;
         }
         comparacoes++;
         if (verbose) {
@@ -188,6 +199,7 @@ void QuickSort_iterativo(Item* A, int n) {
         }
     }
     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
 
     // Libera a memória da pilha
     free(stack);

@@ -62,6 +62,13 @@ void selectionsort(Item* v, int n) {
     }
     printf("comparacoes: %d\n", comparacoes);
     printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
 }
 
 void Inserctionsort(Item* v, int n) {
@@ -88,7 +95,17 @@ void Inserctionsort(Item* v, int n) {
     }
     printf("comparacoes: %d\n", comparacoes);
     printf("trocas: %d\n", trocas);
+     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
 }
+
 
 void BubbleSort(Item* v, int n) {
     int i, j;
@@ -115,7 +132,19 @@ void BubbleSort(Item* v, int n) {
     }
     printf("comparacoes: %d\n", comparacoes);
     printf("trocas: %d\n", trocas);
+     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
 }
+
+
+
 
 void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
     Item pivo, aux;
@@ -146,7 +175,17 @@ void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
     }
     printf("comparacoes: %d\n", comparacoes);
     printf("trocas: %d\n", trocas);
+     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
 }
+
 
 void Ordena(int Esq, int Dir, Item* A) {
     int i, j;
@@ -198,12 +237,23 @@ void QuickSort_iterativo(Item* A, int n) {
             print_vetor(A, n);
         }
     }
+    
     printf("comparacoes: %d\n", comparacoes);
     printf("trocas: %d\n", trocas);
+     printf("comparacoes: %d\n", comparacoes);
+    printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
+}
 
     // Libera a memória da pilha
-    free(stack);
-}
+    
+
 int medianaDeTres(Item* v, int a, int b, int c) {
     if ((v[a].chave > v[b].chave) != (v[a].chave > v[c].chave))
         return a;
@@ -228,22 +278,29 @@ void particaoMediana3(int Esq, int Dir, int* i, int* j, Item* A) {
     *j = Dir;
     
     do {
-        while (A[*i].chave < pivo.chave) (*i)++;
-        while (A[*j].chave > pivo.chave) (*j)--;
+        while (A[*i].chave < pivo.chave) {
+            (*i)++;
+            comparacoes++;
+        }
+        while (A[*j].chave > pivo.chave) {
+            (*j)--;
+            comparacoes++;
+        }
         if (*i <= *j) {
             Item aux = A[*i];
             A[*i] = A[*j];
             A[*j] = aux;
             (*i)++;
             (*j)--;
+            trocas++;
         }
     } while (*i <= *j);
-    comparacoes++;
+    
     if (verbose) {
         printf("ParticaoMediana3: Esq=%d, Dir=%d, i=%d, j=%d, Pivo=%d\n", Esq, Dir, *i, *j, pivo.chave);
-        print_vetor(A, Dir - Esq + 1);
+        // Assumindo que print_vetor imprime o vetor a partir de A[Esq] até A[Dir]
+        print_vetor(A + Esq, Dir - Esq + 1);
     }
-    printf("comparacoes: %d\n", comparacoes);
 }
 
 void ordenaMediana3(int Esq, int Dir, Item* A) {
@@ -255,7 +312,17 @@ void ordenaMediana3(int Esq, int Dir, Item* A) {
 
 void quickSortMediana3(Item* A, int n) {
     srand(time(NULL));  // Inicializa a semente do gerador de números aleatórios
+    
+    clock_t inicio = clock();
+    
     ordenaMediana3(0, n - 1, A);
+    
+    clock_t fim = clock();
+    
+    double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo total de execucao: %.2f segundos\n", tempo_segundos);
+    printf("Comparacoes: %d\n", comparacoes);
+    printf("Trocas: %d\n", trocas);
 }
 void quickSortComInsercao(Item* A, int n) {
     Ordena(0, n - 1, A);
@@ -310,7 +377,15 @@ void particaoMediana5(int Esq, int Dir, int* i, int* j, Item* A) {
         printf("ParticaoMediana5: Esq=%d, Dir=%d, i=%d, j=%d, Pivo=%d\n", Esq, Dir, *i, *j, pivo);
         print_vetor(A, Dir - Esq + 1);
     }
-    printf("comparacoes: %d\n", comparacoes);
+    printf("comparacoes: %d\n", comparacoes);   
+        printf("trocas: %d\n", trocas);
+       clock_t inicio = clock();
+    
+
+
+   clock_t fim = clock();
+   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+   printf("Tempo total de execucao %.2f ", tempo_segundos );
 }
 
 void ordenaMediana5(int Esq, int Dir, Item* A) {
@@ -325,20 +400,7 @@ void quickSortMediana5(Item* A, int n) {
     ordenaMediana5(0, n - 1, A);
 }
 
-void executar_experimento(Item* v, int n, void (*sort_func)(Item*, int)) {
-    long long int comparacoes = 0;
-    long long int copias = 0;
 
-    clock_t inicio = clock();
-    sort_func(v, n);
-    clock_t fim = clock();
-
-    double tempo_execucao = (double)(fim - inicio) / CLOCKS_PER_SEC;
-
-    printf("Tempo de Execucao: %.3f segundos\n", tempo_execucao);
-    printf("Comparacoes: %lld\n", comparacoes);
-    printf("Copias: %lld\n", copias);
-}
 void gerar_vetor_aleatorio(Item* v, int n) {
     for (int i = 0; i < n; i++) {
         v[i].chave = rand() % 1000000;

@@ -6,11 +6,14 @@
 
 int main(){
 
+    
+      
+
     Item v[] = {9, 8, 1, 7, 3, 5, 2, 4, 6};
     int n = sizeof(v) / sizeof(v[0]);
 
     int opcao = menu();
-    quickSortrecursivo(v, n);
+    selectionsort(v, n);
     printf("vetor final\n");
     print_vetor(v, n);
 
@@ -62,3 +65,5 @@ int main(){
 
 
     
+
+  

@@ -1,61 +1,122 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include <string.h>
 #include "time.h"
 #include "ordenacao.h"
 #define verbose 1
 
+Item* lerArquivo(const char *nomeArquivo, int *quantidade) {
+    FILE *arquivo = fopen(nomeArquivo, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return NULL;
+    }
+
+    // Lê o conteúdo da linha do arquivo
+    char linha[1024];
+    if (fgets(linha, sizeof(linha), arquivo) == NULL) {
+        printf("Erro ao ler a linha do arquivo.\n");
+        fclose(arquivo);
+        return NULL;
+    }
+    fclose(arquivo);
+
+    // Conta a quantidade de números na linha
+    int count = 1;
+    for (char *p = linha; *p != '\0'; p++) {
+        if (*p == ',') {
+            count++;
+        }
+    }
+    
+    // Aloca o vetor de Items
+    Item *vetor = (Item *)malloc(count * sizeof(Item));
+    if (vetor == NULL) {
+        printf("Erro ao alocar memória para o vetor.\n");
+        return NULL;
+    }
+
+    // Divide a linha e converte os números para o vetor de Items
+    char *token = strtok(linha, ",");
+    int i = 0;
+    while (token != NULL) {
+        vetor[i].chave = atoi(token);
+        token = strtok(NULL, ",");
+        i++;
+    }
+
+    *quantidade = count;
+    return vetor;
+}
+
+
+
 int main(){
 
-    
-      
+    int quantidade;
+    char nomeArquivo[50];  
 
-    Item v[] = {9, 8, 1, 7, 3, 5, 2, 4, 6};
-    int n = sizeof(v) / sizeof(v[0]);
+    printf("Digite o nome do arquivo: ");
+    scanf("%s", nomeArquivo);
+
+    Item *v = lerArquivo(nomeArquivo, &quantidade);
 
     int opcao = menu();
-    selectionsort(v, n);
-    printf("vetor final\n");
-    print_vetor(v, n);
 
-    /*switch (opcao) {
+    switch (opcao) {
         case 1:
             printf("Ordenação Selection Sort\n");
-            executar_experimento(v, n, selectionsort);
+            selectionsort(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 2:
             printf("Ordenação Insertion Sort\n");
-            executar_experimento(v, n, Inserctionsort);
+            Inserctionsort(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 3:
-            printf("Ordenação Bubble Sort\n");
-            executar_experimento(v, n, BubbleSort);
+            printf("Ordenação bubble sort\n");
+            BubbleSort(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 4:
-            printf("Ordenação Quick Sort\n");
-            executar_experimento(v, n, quickSortrecursivo);
+            printf("Ordenação quick sort\n");
+            QuickSort_iterativo(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 5:
-            printf("Ordenação Quick Sort com Inserção\n");
-            executar_experimento(v, n, quickSortComInsercao);
+            printf("Ordenação quick sort com inserção\n");
+            quickSortComInsercao(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 6:
-            printf("Ordenação Quick Sort recursivo\n");
-            executar_experimento(v, n, quickSortrecursivo);
+            printf("Ordenação quick sort recursivo\n");
+            quickSortrecursivo(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 7:
-            printf("Ordenação Quick Sort com Partição e Mediana de 3\n");
-            executar_experimento(v, n, quickSortMediana3);
+            printf("Ordenação quick sort com partição e mediana de 3\n");
+            quickSortMediana3(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
         case 8:
-            printf("Ordenação Quick Sort com Partição e Mediana de 5\n");
-            executar_experimento(v, n, quickSortMediana5);
+            printf("Ordenação quick sort com partição e mediana de 5\n");
+            quickSortMediana5(v, quantidade);
+            printf("vetor final\n");
+            print_vetor(v, quantidade);
             break;
-        case 9:
-            printf("Ordenação Quick Sort iterativo\n");
-            executar_experimento(v, n, QuickSort_iterativo);
-            break;*/
-
-    printf("escolheu %d\n", opcao);
+        default:
+            printf("Escolha uma opção válida\n");
+            break;
+    }   
+            
     return 0;
 }
 

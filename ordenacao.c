@@ -18,7 +18,6 @@ int menu() {
     printf("6. Ordenacao Quick Sort recursivo\n");
     printf("7. Ordenacao Quick Sort com Partição e Mediana de 3\n");
     printf("8. Ordenacao Quick Sort com Partição e Mediana de 5\n");
-    printf("9. Ordenacao Quick Sort iterativo\n");
     printf("escolha uma opcao: ");
     scanf("%d", &opcao);
     return opcao;

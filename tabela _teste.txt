@@ -1,0 +1,20 @@
+tamanhovetor = 1000
+TEMPO
+bubblesort -> 0 s        
+selectionsort -> 0 s
+insertionsort -> 0 s
+quicksortrecursivo-> 0 s
+quicksortiterativo-> 0.02 s
+medianade3-> 0
+medianade5-> 0
+quicksortcominserção-> 0
+
+TROCAS(Varia dependendo do vetor gerado aleatoriamente)
+bubblesort -> 254184      
+selectionsort -> 996
+insertionsort -> 254184
+quicksortrecursivo-> 0 s
+quicksortiterativo-> 0.02 s
+medianade3-> 0
+medianade5-> 0
+quicksortcominserção-> 0

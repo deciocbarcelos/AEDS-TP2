@@ -32,4 +32,6 @@ void ordenaMediana3(int Esq, int Dir, Item* A);
 void particaoMediana3(int Esq, int Dir, int* i, int* j, Item* A) ;
 void gerar_vetor_aleatorio(Item* v, int n);
 void zerar_contagens();
+void gerar_arquivo_saida(const char* nome_entrada, Item* v, int n); 
+        
 #endif

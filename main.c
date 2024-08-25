@@ -1,6 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "time.h"
 #include "ordenacao.h"
 
@@ -49,6 +49,7 @@ Item* lerArquivo(const char *nomeArquivo, int *quantidade) {
     return vetor;
 }
 
+
 int main(int argc, char *argv[]) {
     int verbose = 0;
     int quick = 0;
@@ -56,21 +57,26 @@ int main(int argc, char *argv[]) {
     char nomeArquivo[100] = "";
 
     // Verifica os argumentos passados
-    if (argc < 3) {
-        printf("Uso: %s -q <metodo ordenacao> <nome entrada>.txt\n", argv[0]);
+    if (argc < 2) {
+        printf("Uso: %s [-v|-verbose] [-q|-quick <metodo ordenacao>] <nome entrada>.txt\n", argv[0]);
         return 1;
     }
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "-verbose") == 0) {
             verbose = 1;
-        }
-        if (strcmp(argv[i], "-q") == 0 || strcmp(argv[i], "-quick") == 0) {
+        } else if (strcmp(argv[i], "-q") == 0 || strcmp(argv[i], "-quick") == 0) {
             quick = 1;
             if (i + 1 < argc) {
                 strcpy(tipoOrdenacao, argv[i + 1]);
                 strcpy(nomeArquivo, argv[i + 2]);
+                i += 2; // Avança o índice para não reprocessar os mesmos argumentos
+            } else {
+                printf("Erro: método de ordenação ou nome do arquivo não fornecidos.\n");
+                return 1;
             }
+        } else {
+            strcpy(nomeArquivo, argv[i]);
         }
     }
 
@@ -82,7 +88,7 @@ int main(int argc, char *argv[]) {
     }
 
     // Executar apenas se verbose estiver ativo
-    if(verbose == 1) {
+    if (verbose) {
         int opcao = menu();
 
         switch (opcao) {
@@ -95,49 +101,64 @@ int main(int argc, char *argv[]) {
                 Inserctionsort(v, quantidade);
                 break;
             case 3:
-                printf("Ordenação bubble sort\n");
+                printf("Ordenação Bubble Sort\n");
                 BubbleSort(v, quantidade);
                 break;
             case 4:
-                printf("Ordenação quick sort\n");
+                printf("Ordenação Quick Sort\n");
                 QuickSort_iterativo(v, quantidade);
                 break;
             case 5:
-                printf("Ordenação quick sort com inserção\n");
+                printf("Ordenação Quick Sort com Inserção\n");
                 quickSortComInsercao(v, quantidade);
                 break;
             case 6:
-                printf("Ordenação quick sort recursivo\n");
+                printf("Ordenação Quick Sort Recursivo\n");
                 quickSortrecursivo(v, quantidade);
                 break;
             case 7:
-                printf("Ordenação quick sort com partição e mediana de 3\n");
+                printf("Ordenação Quick Sort com Mediana de 3\n");
                 quickSortMediana3(v, quantidade);
                 break;
             case 8:
-                printf("Ordenação quick sort com partição e mediana de 5\n");
+                printf("Ordenação Quick Sort com Mediana de 5\n");
                 quickSortMediana5(v, quantidade);
                 break;
             default:
                 printf("Escolha uma opção válida\n");
                 break;
-        } 
+        }
         printf("Vetor final\n");
         print_vetor(v, quantidade);
     }
 
-    // Executar o quick sort direto se quick estiver ativo
-    if(quick == 1 && verbose == 0) {
-        if (strcmp(tipoOrdenacao, "quicksort_iterativo") == 0) {
+    // Executar o método especificado se quick estiver ativo e verbose não estiver
+    if (quick && !verbose) {
+        if (strcmp(tipoOrdenacao, "selectionsort") == 0) {
+            selectionsort(v, quantidade);
+            gerar_arquivo_saida(nomeArquivo, v, quantidade);
+
+        } else if (strcmp(tipoOrdenacao, "insertion_sort") == 0) {
+            Inserctionsort(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
+        } else if (strcmp(tipoOrdenacao, "bubble_sort") == 0) {
+            BubbleSort(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
+        } else if (strcmp(tipoOrdenacao, "quicksort_iterativo") == 0) {
             QuickSort_iterativo(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
         } else if (strcmp(tipoOrdenacao, "quicksort_com_insercao") == 0) {
             quickSortComInsercao(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
         } else if (strcmp(tipoOrdenacao, "quicksort_recursivo") == 0) {
             quickSortrecursivo(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
         } else if (strcmp(tipoOrdenacao, "quicksort_mediana3") == 0) {
             quickSortMediana3(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
         } else if (strcmp(tipoOrdenacao, "quicksort_mediana5") == 0) {
             quickSortMediana5(v, quantidade);
+             gerar_arquivo_saida(nomeArquivo, v, quantidade);
         } else {
             printf("Tipo de ordenação desconhecido: %s\n", tipoOrdenacao);
             free(v);

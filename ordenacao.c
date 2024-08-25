@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define verbose 0
 
+int verbose = 0;
 unsigned long long comparacoes = 0;
 unsigned long long trocas = 0;
 
@@ -13,26 +13,26 @@ int menu() {
     printf("1. Ordenacao Selection Sort\n");
     printf("2. Ordenacao Insertion Sort\n");
     printf("3. Ordenacao Bubble Sort\n");
-    printf("4. Ordenacao Quick Sort\n");
-    printf("5. Ordenacao Quick Sort com Insercao\n");
-    printf("6. Ordenacao Quick Sort recursivo\n");
-    printf("7. Ordenacao Quick Sort com Particao e Mediana de 3\n");
-    printf("8. Ordenacao Quick Sort com Particao e Mediana de 5\n");
-    printf("escolha uma opcao: ");
+    printf("4. Ordenacao Quick Sort Recursivo\n");
+    printf("5. Ordenacao Quick Sort Iterativo\n");
+    printf("6. Ordenacao Quick Sort com Mediana de 3\n");
+    printf("7. Ordenacao Quick Sort com Mediana de 5\n");
+    printf("8. Ordenacao Quick Sort com Insercao\n");
+    printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
     return opcao;
 }
 
 void print_vetor(Item* v, int n) {
-    if (verbose) {
-        for (int i = 0; i < n; i++) {
-            printf("%d ", v[i].chave);
-        }
-        printf("\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", v[i].chave);
     }
+    printf("\n");
 }
 
+
 void selectionsort(Item* v, int n) {
+    zerar_contagens();
     int i, j, Min;
     Item aux;
     clock_t inicio = clock();
@@ -46,7 +46,6 @@ void selectionsort(Item* v, int n) {
             }
         }
 
-        // Só incrementa a contagem de trocas se Min for diferente de i, ou seja, uma troca real ocorreu
         if (Min != i) {
             aux = v[Min];
             v[Min] = v[i];
@@ -56,22 +55,20 @@ void selectionsort(Item* v, int n) {
 
         if (verbose) {
             printf("SelectionSort: passo %d\n", i + 1);
-            printf("trocou %d com %d\n", v[i].chave, v[Min].chave);
+            printf("Trocou %d com %d\n", v[i].chave, v[Min].chave);
             print_vetor(v, n);
         }
     }
-    printf("comparacoes: %llu\n", comparacoes);
-    printf("trocas: %llu\n", trocas);
-       
-    
 
-
-   clock_t fim = clock();
-   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
-   printf("Tempo total de execucao %.2f ", tempo_segundos );
+    clock_t fim = clock();
+    double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo total de execucao: %.2f segundos\n", tempo_segundos);
+    printf("Comparacoes: %llu\n", comparacoes);
+    printf("Trocas: %llu\n", trocas);
 }
 
 void Inserctionsort(Item* v, int n) {
+    zerar_contagens();
     int i, j;
     Item aux;
     clock_t inicio = clock();
@@ -86,25 +83,21 @@ void Inserctionsort(Item* v, int n) {
             j--;
             trocas++;
         }
-    
         v[j + 1] = aux;
+        
         if (verbose) {
             printf("InsertionSort: passo %d\n", i);
-            printf("trocou %d com %d\n", v[i].chave, v[j + 1].chave);
+            printf("Trocou %d com %d\n", v[i].chave, v[j + 1].chave);
             print_vetor(v, n);
         }
     }
-    printf("comparacoes: %llu\n", comparacoes);
-    printf("trocas: %llu\n", trocas);
-     
-    
 
-
-   clock_t fim = clock();
-   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
-   printf("Tempo total de execucao %.2f ", tempo_segundos );
+    clock_t fim = clock();
+    double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo total de execucao: %.2f segundos\n", tempo_segundos);
+    printf("Comparacoes: %llu\n", comparacoes);
+    printf("Trocas: %llu\n", trocas);
 }
-
 
 void BubbleSort(Item* v, int n) {
     zerar_contagens();
@@ -114,7 +107,7 @@ void BubbleSort(Item* v, int n) {
     Item aux;
 
     for (i = 0; i < n - 1; i++) {
-        trocou = 0;  // Flag para indicar se houve troca
+        trocou = 0;
         for (j = 1; j < n - i; j++) {
             comparacoes++;
             if (v[j].chave < v[j - 1].chave) {
@@ -131,25 +124,22 @@ void BubbleSort(Item* v, int n) {
             print_vetor(v, n);
         }
 
-        if (!trocou) break;  // Se nenhuma troca ocorreu, o vetor já está ordenado
+        if (!trocou) break;
     }
-    printf("comparacoes: %llu\n", comparacoes);
-    printf("trocas: %llu\n", trocas);
 
     clock_t fim = clock();
     double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
-    printf("Tempo total de execucao %.2f ", tempo_segundos );
+    printf("Tempo total de execucao: %.2f segundos\n", tempo_segundos);
+    printf("Comparacoes: %llu\n", comparacoes);
+    printf("Trocas: %llu\n", trocas);
 }
-
-
-
 
 void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
     clock_t inicio = clock();
     Item pivo, aux;
     *i = Esq;
     *j = Dir;
-    pivo = A[(*i + *j) / 2]; // Obtém o pivô
+    pivo = A[(*i + *j) / 2];
 
     do {
         while (pivo.chave > A[*i].chave) (*i)++;
@@ -160,28 +150,22 @@ void Particao(int Esq, int Dir, int* i, int* j, Item* A) {
             A[*j] = aux;
             (*i)++;
             (*j)--;
-            trocas ++;
-
+            trocas++;
         }
         comparacoes++;
     } while (*i <= *j);
-    
+
     if (verbose) {
-        printf("Particao: Esq=%d, Dir=%d, i=%d, j=%d, Pivô=%d\n", Esq, Dir, *i, *j, pivo.chave);
-        printf("trocou %d com %d\n", A[*i].chave, A[*j].chave);
-        print_vetor(A, Dir - Esq + 1);
-        
+        printf("Particao: Esq=%d, Dir=%d, i=%d, j=%d, Pivo=%d\n", Esq, Dir, *i, *j, pivo.chave);
+        print_vetor(A + Esq, Dir - Esq + 1);
     }
-    printf("comparacoes: %llu\n", comparacoes);
-    printf("trocas: %llu\n", trocas);
-     
 
-
-   clock_t fim = clock();
-   double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
-   printf("Tempo total de execucao %.2f ", tempo_segundos );
+    clock_t fim = clock();
+    double tempo_segundos = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    printf("Tempo total de execucao: %.2f segundos\n", tempo_segundos);
+    printf("Comparacoes: %llu\n", comparacoes);
+    printf("Trocas: %llu\n", trocas);
 }
-
 
 void Ordena(int Esq, int Dir, Item* A) {
     int i, j;
@@ -411,4 +395,32 @@ void gerar_vetor_aleatorio(Item* v, int n) {
 void zerar_contagens() {
     comparacoes = 0;
     trocas = 0;
+}
+// Função para gerar o arquivo de saída com o formato especificado
+void gerar_arquivo_saida(const char* nome_entrada, Item* v, int n) {
+    // Cria o nome do arquivo de saída
+    char nome_saida[256];
+    snprintf(nome_saida, sizeof(nome_saida), "%s_ordenado.txt", nome_entrada);
+    
+    // Abre o arquivo de saída para escrita
+    FILE* arquivo_saida = fopen(nome_saida, "w");
+    if (arquivo_saida == NULL) {
+        perror("Erro ao abrir o arquivo de saída");
+        exit(EXIT_FAILURE);
+    }
+
+    // Escreve as métricas no arquivo
+    fprintf(arquivo_saida, "Comparacoes: %llu - Trocas: %llu\n", comparacoes, trocas);
+
+    // Escreve os elementos ordenados no arquivo
+    for (int i = 0; i < n; i++) {
+        fprintf(arquivo_saida, "%d", v[i].chave);
+        if (i < n - 1) {
+            fprintf(arquivo_saida, " ");
+        }
+    }
+    fprintf(arquivo_saida, "\n");
+
+    // Fecha o arquivo
+    fclose(arquivo_saida);
 }
